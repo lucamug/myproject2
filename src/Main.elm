@@ -3,21 +3,10 @@ module Main exposing (..)
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
-
-
-
--- elm reactor
-
-
-counter =
-    32 + 4
+import Html.Events
 
 
 main =
-    -- { init : Int
-    -- , view : Int -> Html String
-    -- , update : String -> Int -> Int
-    -- }
     Browser.sandbox
         { init = 32
         , view = view
@@ -26,7 +15,15 @@ main =
 
 
 update msg model =
-    model
+    let
+        a =
+            Debug.log "msg" ( msg, model )
+    in
+    if msg == "increment" then
+        model + 1
+
+    else
+        model - 1
 
 
 view model =
@@ -34,15 +31,7 @@ view model =
         [ id "main"
         ]
         [ node "style" [] [ text "body {margin: 20px}" ]
-        , button [] [ text "+1" ]
-        , p [] [ text (String.fromInt counter) ]
-        , button [] [ text "-1" ]
+        , button [ Html.Events.onClick "increment" ] [ text "+1" ]
+        , p [] [ text (String.fromInt model) ]
+        , button [ Html.Events.onClick "decrement" ] [ text "-1" ]
         ]
-
-
-
--- <div id="main">
---  <button>+1</button>
---  <p>34</p>
---  <button>-1</button>
--- </div>
